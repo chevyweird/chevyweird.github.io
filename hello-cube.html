@@ -55,7 +55,10 @@
       clock = new THREE.Clock();
       deltaTime = 0;
       totalTime = 0;
-
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
       ////////////////////////////////////////////////////////////
       // setup arToolkitSource
       ////////////////////////////////////////////////////////////
@@ -101,24 +104,24 @@
       ////////////////////////////////////////////////////////////
 
       // build markerControls
-      markerRoot1 = new THREE.Group();
-      scene.add(markerRoot1);
-      let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
-        type: 'pattern',
-        patternUrl: 'data/hiro.patt',
-      });
+      //   markerRoot1 = new THREE.Group();
+      //   scene.add(markerRoot1);
+      //   let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+      //     type: 'pattern',
+      //     patternUrl: 'data/hiro.patt',
+      //   });
 
-      let geometry1 = new THREE.CubeGeometry(1, 1, 1);
-      let material1 = new THREE.MeshNormalMaterial({
-        transparent: true,
-        opacity: 0.5,
-        side: THREE.DoubleSide,
-      });
+      //   let geometry1 = new THREE.CubeGeometry(1, 1, 1);
+      //   let material1 = new THREE.MeshNormalMaterial({
+      //     transparent: true,
+      //     opacity: 0.5,
+      //     side: THREE.DoubleSide,
+      //   });
 
-      mesh1 = new THREE.Mesh(geometry1, material1);
-      mesh1.position.y = 0.5;
+      //   mesh1 = new THREE.Mesh(geometry1, material1);
+      //   mesh1.position.y = 0.5;
 
-      markerRoot1.add(mesh1);
+      //   markerRoot1.add(mesh1);
     }
 
     function update() {
