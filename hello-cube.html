@@ -17,6 +17,8 @@
 
   <body style="margin: 0px; overflow: hidden; font-family: Monospace">
     <script>
+      import { VRButton } from 'three/addons/webxr/VRButton.js';
+
       let cube, renderer, scene, camera;
 
       function init() {
@@ -47,41 +49,41 @@
         // // setup arToolkitSource
         // ////////////////////////////////////////////////////////////
 
-        // arToolkitSource = new THREEx.ArToolkitSource({
-        //   sourceType: 'webcam',
-        // });
+        arToolkitSource = new THREEx.ArToolkitSource({
+          sourceType: 'webcam',
+        });
 
-        // function onResize() {
-        //   arToolkitSource.onResize();
-        //   arToolkitSource.copySizeTo(renderer.domElement);
-        //   if (arToolkitContext.arController !== null) {
-        //     arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
-        //   }
-        // }
+        function onResize() {
+          arToolkitSource.onResize();
+          arToolkitSource.copySizeTo(renderer.domElement);
+          if (arToolkitContext.arController !== null) {
+            arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
+          }
+        }
 
-        // arToolkitSource.init(function onReady() {
-        //   onResize();
-        // });
+        arToolkitSource.init(function onReady() {
+          onResize();
+        });
 
-        // // handle resize event
-        // window.addEventListener('resize', function () {
-        //   onResize();
-        // });
+        // handle resize event
+        window.addEventListener('resize', function () {
+          onResize();
+        });
 
-        // ////////////////////////////////////////////////////////////
-        // // setup arToolkitContext
-        // ////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
+        // setup arToolkitContext
+        ////////////////////////////////////////////////////////////
 
-        // // create atToolkitContext
-        // arToolkitContext = new THREEx.ArToolkitContext({
-        //   cameraParametersUrl: 'data/camera_para.dat',
-        //   detectionMode: 'mono',
-        // });
+        // create atToolkitContext
+        arToolkitContext = new THREEx.ArToolkitContext({
+          cameraParametersUrl: 'data/camera_para.dat',
+          detectionMode: 'mono',
+        });
 
-        // // copy projection matrix to camera when initialization complete
-        // arToolkitContext.init(function onCompleted() {
-        //   camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-        // });
+        // copy projection matrix to camera when initialization complete
+        arToolkitContext.init(function onCompleted() {
+          camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+        });
       }
 
       function animate() {
