@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+<script src="js/three.js"></script>;
 
 function init() {
   const scene = new THREE.Scene();
