@@ -55,26 +55,9 @@
         document.getElementById('window3d').textContent = `${alpha},${beta},${gamma}`;
       }
 
-      function requestOrientationPermission() {
-        DeviceOrientationEvent.requestPermission()
-          .then((response) => {
-            alert(response);
-            if (response == 'granted') {
-              window.addEventListener('deviceorientation', (e) => {
-                alert(e);
-                handleOrientation(e);
-              });
-            }
-          })
-          .catch(console.error);
-      }
-
-      requestOrientationPermission();
-
-      window.onload = () => {
-        alert('windowOnload');
-        requestOrientationPermission();
-      };
+      window.addEventListener('devicemotion', (event) => {
+        handleOrientation(event);
+      });
     </script>
   </body>
 </html>
