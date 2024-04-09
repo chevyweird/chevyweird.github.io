@@ -104,16 +104,20 @@
         });
       }
 
-      navigator.xr.requestDevice().then(function (device) {
+      navigator.xr.requestAnimationFrame((time, frame) => {
         device.addEventListener('pose', function (event) {
-          const pose = event.pose;
+          const pose = frame.getViewerPose();
 
-          // Обновление позиции и ориентации объекта в соответствии с данными о позиции и ориентации устройства
-          object.position.copy(pose.transform.position);
-          object.quaternion.copy(pose.transform.orientation);
+          if (pose) {
+            const view = pose.views[0]; // Берем первый вид, но можно учитывать и другие
 
-          // Опционально: учитывайте масштаб и другие параметры
-          // object.scale.setScalar(pose.scale);
+            // Обновление позиции и ориентации объекта в соответствии с данными о позиции и ориентации устройства
+            object.position.copy(view.transform.position);
+            object.quaternion.copy(view.transform.orientation);
+
+            // Опционально: учитывайте масштаб и другие параметры
+            // object.scale.setScalar(pose.scale);
+          }
         });
 
         // Запуск рендеринга сцены
