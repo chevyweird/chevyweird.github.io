@@ -104,17 +104,36 @@
         });
       }
 
-      function animate() {
-        requestAnimationFrame(animate);
+      navigator.xr.requestDevice().then(function (device) {
+        device.addEventListener('pose', function (event) {
+          const pose = event.pose;
 
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+          // Обновление позиции и ориентации объекта в соответствии с данными о позиции и ориентации устройства
+          object.position.copy(pose.transform.position);
+          object.quaternion.copy(pose.transform.orientation);
 
-        renderer.render(scene, camera);
-      }
+          // Опционально: учитывайте масштаб и другие параметры
+          // object.scale.setScalar(pose.scale);
+        });
 
-      init();
-      animate();
+        // Запуск рендеринга сцены
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+      });
+      // function animate() {
+      //   requestAnimationFrame(animate);
+
+      //   cube.rotation.x += 0.01;
+      //   cube.rotation.y += 0.01;
+
+      //   renderer.render(scene, camera);
+      // }
+      // animate();
     </script>
   </body>
 </html>
