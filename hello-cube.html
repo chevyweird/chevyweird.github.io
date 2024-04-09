@@ -17,26 +17,15 @@
 
   <body style="margin: 0px; overflow: hidden; font-family: Monospace">
     <div id="window3d" style="display: block">window</div>
+    <div id="ARThreeJS"></div>
 
     <script>
-      let cube, renderer, scene, camera;
-      let latitude, longitude;
-      let alpha, beta, gamma;
+      let scene, camera, renderer, cube;
 
-      navigator.geolocation.getCurrentPosition((position) => {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-        // Действия с полученными координатами
-      });
+      init();
+      animate();
 
-      function convertGeoToVirtualCoords(latitude, longitude) {
-        // Ваш алгоритм преобразования координат
-        // Например, масштабирование и смещение
-        const virtualX = latitude;
-        const virtualY = longitude;
-
-        return { x: virtualX, y: virtualY };
-      }
+      document.querySelector('#ARThreeJS').appendChild(renderer.domElement);
 
       function init() {
         scene = new THREE.Scene();
@@ -48,86 +37,7 @@
         cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
         camera.position.z = 5;
-        // scene = new THREE.Scene();
-
-        // let ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
-        // scene.add(ambientLight);
-
-        // camera = new THREE.PerspectiveCamera();
-        // scene.add(camera);
-
-        // renderer = new THREE.WebGLRenderer({
-        //   antialias: true,
-        //   alpha: true,
-        // });
-        // renderer.setSize(window.innerWidth, window.innerHeight);
-        // document.body.appendChild(renderer.domElement);
-
-        // //MODEL
-        // const virtualCoords = convertGeoToVirtualCoords(latitude, longitude);
-
-        // const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        // cube = new THREE.Mesh(geometry, material);
-        // cube.position.x = virtualCoords.x;
-        // cube.position.y = virtualCoords.y;
-        // scene.add(cube);
-
-        // camera.position.z = 5;
-
-        // ////////////////////////////////////////////////////////////
-        // // setup arToolkitSource
-        // ////////////////////////////////////////////////////////////
-
-        // arToolkitSource = new THREEx.ArToolkitSource({
-        //   sourceType: 'webcam',
-        // });
-
-        // function onResize() {
-        //   arToolkitSource.onResize();
-        //   arToolkitSource.copySizeTo(renderer.domElement);
-        //   if (arToolkitContext.arController !== null) {
-        //     arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
-        //   }
-        // }
-
-        // arToolkitSource.init(function onReady() {
-        //   onResize();
-        // });
-
-        // // handle resize event
-        // window.addEventListener('resize', function () {
-        //   onResize();
-        // });
-
-        // ////////////////////////////////////////////////////////////
-        // // setup arToolkitContext
-        // ////////////////////////////////////////////////////////////
-
-        // // create atToolkitContext
-        // arToolkitContext = new THREEx.ArToolkitContext({
-        //   cameraParametersUrl: 'data/camera_para.dat',
-        //   detectionMode: 'mono',
-        // });
-
-        // // copy projection matrix to camera when initialization complete
-        // arToolkitContext.init(function onCompleted() {
-        //   camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-        // });
       }
-
-      function handleOrientation(event) {
-        alpha = event.alpha; // угол поворота устройства по оси Z
-        beta = event.beta; // угол наклона устройства по оси X
-        gamma = event.gamma; // угол наклона устройства по оси Y
-        document.getElementById('window3d').textContent = `${alpha},${beta},${gamma}`;
-        // Опционально: обновите позицию и ориентацию объекта в соответствии с данными о позиции и ориентации устройства
-        // Например, можно использовать данные углов для обновления позиции и ориентации объекта
-        // Обратите внимание, что необходимо выполнить некоторые преобразования для получения координат в системе Three.js
-      }
-
-      // Добавление слушателя события изменения ориентации устройства
-      window.addEventListener('deviceorientation', handleOrientation, true);
 
       function animate() {
         requestAnimationFrame(animate);
@@ -137,18 +47,6 @@
 
         renderer.render(scene, camera);
       }
-
-      init();
-      animate();
-      // function animate() {
-      //   requestAnimationFrame(animate);
-
-      //   cube.rotation.x += 0.01;
-      //   cube.rotation.y += 0.01;
-
-      //   renderer.render(scene, camera);
-      // }
-      // animate();
     </script>
   </body>
 </html>
