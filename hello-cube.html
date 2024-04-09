@@ -16,6 +16,7 @@
   </head>
 
   <body style="margin: 0px; overflow: hidden; font-family: Monospace">
+    <div id="addMePls"></div>
     <script>
       let cube, renderer, scene, camera;
       let latitude, longitude;
@@ -41,7 +42,7 @@
         let ambientLight = new THREE.AmbientLight(0xcccccc, 0.5);
         scene.add(ambientLight);
 
-        camera = new THREE.PerspectiveCamera();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         scene.add(camera);
 
         renderer = new THREE.WebGLRenderer({
@@ -104,31 +105,27 @@
         });
       }
 
-      navigator.xr.requestAnimationFrame((time, frame) => {
-        device.addEventListener('pose', function (event) {
-          const pose = frame.getViewerPose();
+      function handleOrientation(event) {
+        var alpha = event.alpha; // угол поворота устройства по оси Z
+        var beta = event.beta; // угол наклона устройства по оси X
+        var gamma = event.gamma; // угол наклона устройства по оси Y
 
-          if (pose) {
-            const view = pose.views[0]; // Берем первый вид, но можно учитывать и другие
+        document.getElementById('addMePls').textContent = `${alpha},${beta},${gamma}`;
+        // Опционально: обновите позицию и ориентацию объекта в соответствии с данными о позиции и ориентации устройства
+        // Например, можно использовать данные углов для обновления позиции и ориентации объекта
+        // Обратите внимание, что необходимо выполнить некоторые преобразования для получения координат в системе Three.js
+      }
 
-            // Обновление позиции и ориентации объекта в соответствии с данными о позиции и ориентации устройства
-            object.position.copy(view.transform.position);
-            object.quaternion.copy(view.transform.orientation);
+      // Добавление слушателя события изменения ориентации устройства
+      window.addEventListener('deviceorientation', handleOrientation, true);
 
-            // Опционально: учитывайте масштаб и другие параметры
-            // object.scale.setScalar(pose.scale);
-          }
-        });
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
 
-        // Запуск рендеринга сцены
-        function animate() {
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-        }
-
-        init();
-        animate();
-      });
+      init();
+      animate();
       // function animate() {
       //   requestAnimationFrame(animate);
 
