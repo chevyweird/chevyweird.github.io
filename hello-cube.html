@@ -47,6 +47,15 @@
 
         renderer.render(scene, camera);
       }
+
+      function handleOrientation(event) {
+        alpha = event.alpha; // угол поворота устройства по оси Z
+        beta = event.beta; // угол наклона устройства по оси X
+        gamma = event.gamma; // угол наклона устройства по оси Y
+        document.getElementById('window3d').textContent = `${alpha},${beta},${gamma}`;
+      }
+
+      window.addEventListener('deviceorientation', handleOrientation, true);
     </script>
   </body>
 </html>
