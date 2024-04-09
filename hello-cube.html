@@ -55,7 +55,21 @@
         document.getElementById('window3d').textContent = `${alpha},${beta},${gamma}`;
       }
 
-      window.addEventListener('deviceorientation', handleOrientation, true);
+      function permission() {
+        if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+          DeviceMotionEvent.requestPermission()
+            .then((response) => {
+              if (response == 'granted') {
+                window.addEventListener('devicemotion', (e) => {
+                  handleOrientation(e);
+                });
+              }
+            })
+            .catch(console.error);
+        } else {
+          alert('DeviceMotionEvent is not defined');
+        }
+      }
     </script>
   </body>
 </html>
