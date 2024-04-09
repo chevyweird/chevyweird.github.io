@@ -18,6 +18,22 @@
   <body style="margin: 0px; overflow: hidden; font-family: Monospace">
     <script>
       let cube, renderer, scene, camera;
+      let latitude, longitude;
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        // Действия с полученными координатами
+      });
+
+      function convertGeoToVirtualCoords(latitude, longitude) {
+        // Ваш алгоритм преобразования координат
+        // Например, масштабирование и смещение
+        const virtualX = latitude;
+        const virtualY = longitude;
+
+        return { x: virtualX, y: virtualY };
+      }
 
       function init() {
         scene = new THREE.Scene();
@@ -36,9 +52,13 @@
         document.body.appendChild(renderer.domElement);
 
         //MODEL
+        const virtualCoords = convertGeoToVirtualCoords(latitude, longitude);
+
         const geometry = new THREE.BoxGeometry(1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         cube = new THREE.Mesh(geometry, material);
+        cube.position.x = virtualCoords.x;
+        cube.position.y = virtualCoords.y;
         scene.add(cube);
 
         camera.position.z = 5;
