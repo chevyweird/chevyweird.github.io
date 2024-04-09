@@ -19,6 +19,8 @@
     <script>
       let cube, renderer, scene, camera;
 
+      navigator.getVRDisplays().then((displays) => alert(displays));
+
       function init() {
         scene = new THREE.Scene();
 
