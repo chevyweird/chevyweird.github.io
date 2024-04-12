@@ -13,7 +13,7 @@
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
         renderer="antialias: true; alpha: true">
-        <a-camera gps-new-camera="gpsMinDistance: 1" rotation-reader></a-camera>
+        <a-camera gps-new-camera="gpsMinDistance: 1" gpsTimeInterval="500" positionMinAccuracy="50" rotation-reader></a-camera>
 
         <a-assets>
           <a-asset-item id="animated-asset" src="assets/penguin.gltf"></a-asset-item>
